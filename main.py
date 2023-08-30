@@ -12,7 +12,7 @@ from rich.table import Table
 from rich.console import Console
 from Infinity.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
 from Infinity.sort_folder import sort
-from Infinity.suggest import suggest_command
+# from Infinity.suggest import suggest_command
 from Infinity.note import note_book
 from Infinity.Abstract_class import ConsoleAbstract, Commands_Handler, TerminalOutput
 
@@ -360,9 +360,9 @@ def delete_email_command(args):
 
 
 def no_command(args) -> str:
-    suggest = suggest_command(args[0])
-    if suggest:
-        return f'You made a mistake, maybe you mean "{suggest}"? Try again'
+    # suggest = suggest_command(args[0])
+    # if suggest:
+    #     return f'You made a mistake, maybe you mean "{suggest}"? Try again'
     return 'Unknown command'
 
 
