@@ -1,4 +1,5 @@
 import re
+import os
 from Infinity.record import Record
 from Infinity.email_class import Email
 from Infinity.address_class import Address
@@ -8,10 +9,17 @@ from Infinity.birthday import Birthday
 from Infinity.address_book import AdressBook
 from rich import print
 from rich.table import Table
+from rich.console import Console
 from Infinity.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
 from Infinity.sort_folder import sort
 from Infinity.suggest import suggest_command
 from Infinity.note import note_book
+from Infinity.Abstract_class import ConsoleAbstract, Commands_Handler, TerminalOutput
+
+console = Console()
+
+terminal_out = TerminalOutput()
+terminal_handler = Commands_Handler(terminal_out)
 
 I = 1
 
@@ -440,17 +448,27 @@ def parser(user_input: str):
 
     return no_command, user_input
 
+def clear_terminal():
+    if os.name == 'posix':  # For Unix-like systems (Linux, macOS)
+        os.system('clear')
+    elif os.name == 'nt':   # For Windows
+        os.system('cls')
+
 
 def main():
 
     global I
     if I == 1:
         address_book.load_data()
-        print(address_book_commands())
+        result = address_book_commands()
+        terminal_handler.print_result(result)
+        # print(address_book_commands())
         I += 1
 
     while True:
         user_input = (input(f'\nEnter command, please!\n\n>>>')).strip()
+
+        clear_terminal()
 
         command, user_info = parser(user_input)
 
